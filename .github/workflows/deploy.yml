@@ -20,10 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: withastro/action@v3
-      with:
-        node-version: 24
-        # with:
-        #   package-manager: pnpm@latest   # only if not using npm
+    with:
+      node-version: 24
 
   deploy:
     needs: build
