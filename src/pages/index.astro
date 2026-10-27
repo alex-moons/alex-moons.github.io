@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Walkthrough from '../components/Walkthrough.svelte';
+
+const resources = [
+	{ label: 'Astro docs', href: 'https://docs.astro.build', note: 'The island architecture' },
+	{ label: 'Svelte docs', href: 'https://svelte.dev/docs/svelte/overview', note: 'Reactive components' },
+	{ label: 'GitHub Pages', href: 'https://docs.astro.build/en/guides/deploy/github/', note: 'Static deployment' }
+];
+---
+
+<Layout>
+	<div class="page-grid">
+		<header class="topbar">
+			<a class="brand" href="/" aria-label="Astro field notes home"><span class="brand-mark">✳</span><span>field notes<span class="brand-slash">/</span>astro</span></a>
+			<nav aria-label="Main navigation">
+				<a href="#walkthrough">Walkthrough</a>
+				<a href="/components">Components</a>
+				<a href="#resources">Resources</a>
+			</nav>
+			<span class="edition">A small interactive guide · 2026</span>
+		</header>
+
+		<main>
+			<section class="intro" aria-labelledby="page-title">
+				<div class="intro-copy">
+					<p class="kicker"><span></span> A practical tour of the modern web stack</p>
+					<h1 id="page-title">Build less.<br /><em>Experience more.</em></h1>
+					<p class="lede">A hands-on field guide to Astro's content-first architecture and Svelte's playful reactivity. Read a concept, touch the code, see the island wake up.</p>
+				</div>
+				<div class="intro-meta">
+					<div class="meta-rule"></div>
+					<p>Four short chapters<br /><strong>One working page</strong></p>
+					<a class="scroll-cue" href="#walkthrough">Scroll to explore <span>↓</span></a>
+				</div>
+			</section>
+
+			<section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-title">
+				<div class="section-heading"><p class="kicker"><span></span> The interactive walkthrough</p><h2 id="walkthrough-title">Your next<br /><em>move</em></h2></div>
+				<Walkthrough client:load />
+			</section>
+
+			<section id="resources" class="resources" aria-labelledby="resources-title">
+				<div><p class="kicker"><span></span> Keep going</p><h2 id="resources-title">The good<br /><em>stuff</em></h2></div>
+				<div class="resource-list">
+					{resources.map((resource, index) => (
+						<a class="resource" href={resource.href} target="_blank" rel="noreferrer">
+							<span class="resource-number">0{index + 1}</span><span><strong>{resource.label}</strong><small>{resource.note}</small></span><span class="arrow">↗</span>
+						</a>
+					))}
+				</div>
+			</section>
+		</main>
+
+		<footer><span>Made with Astro + Svelte</span><span>Source is the tutorial</span></footer>
+	</div>
+</Layout>
+
+<style>
+	:global(:root) { --ink: #20302c; --paper: #f5f6ef; --lime: #b8d654; --coral: #d77960; --line: #d8dfd5; --display: Georgia, 'Times New Roman', serif; --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
+	:global(body) { background: var(--paper); color: var(--ink); font-family: 'Trebuchet MS', Verdana, sans-serif; }
+	.page-grid { max-width: 1220px; margin: auto; padding: 0 42px; }
+	.topbar { display: flex; align-items: center; min-height: 76px; border-bottom: 1px solid var(--line); gap: 40px; font: 11px var(--mono); }
+	.brand { display: flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font-weight: 700; letter-spacing: -.06em; }.brand-mark { display: grid; place-items: center; width: 23px; height: 23px; color: var(--ink); background: var(--lime); font-size: 17px; }.brand-slash { color: var(--coral); }
+	nav { display: flex; gap: 25px; margin-left: 12px; } nav a { color: #728078; text-decoration: none; } nav a:hover { color: var(--ink); }.edition { margin-left: auto; color: #a0aaa3; font-size: 10px; }
+	.intro { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 30px; padding: 112px 8% 128px; }.kicker { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--coral); font: 700 10px var(--mono); letter-spacing: .13em; text-transform: uppercase; }.kicker span { display: inline-block; width: 22px; height: 1px; background: currentColor; }
+	h1, h2 { margin: 18px 0 0; color: var(--ink); font: 400 clamp(58px, 9vw, 118px)/.91 var(--display); letter-spacing: -.055em; } h1 em, h2 em { color: var(--coral); font-style: italic; }.lede { max-width: 465px; margin: 30px 0 0 4px; color: #68766f; font-size: 16px; line-height: 1.7; }.intro-meta { align-self: end; padding-bottom: 8px; color: #78847d; font: 11px/1.7 var(--mono); }.meta-rule { width: 100%; height: 1px; margin-bottom: 18px; background: var(--ink); }.intro-meta strong { color: var(--ink); font-weight: 500; }.scroll-cue { display: block; margin-top: 76px; color: var(--ink); text-decoration: none; }.scroll-cue span { margin-left: 13px; color: var(--coral); font-size: 18px; }
+	.walkthrough-section { padding: 0 0 125px; }.section-heading { display: flex; align-items: end; justify-content: space-between; margin: 0 8% 38px; }.section-heading h2, .resources h2 { font-size: clamp(43px, 6vw, 72px); }.section-heading .kicker { margin-bottom: 7px; }
+	.resources { display: grid; grid-template-columns: .65fr 1fr; gap: 10%; padding: 85px 8% 95px; border-top: 1px solid var(--line); }.resource-list { border-top: 1px solid var(--line); }.resource { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 14px; min-height: 72px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }.resource-number { color: var(--coral); font: 10px var(--mono); }.resource strong, .resource small { display: block; }.resource strong { font-size: 14px; }.resource small { margin-top: 4px; color: #87928b; font: 10px var(--mono); }.arrow { color: var(--coral); font-size: 19px; }.resource:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+	footer { display: flex; justify-content: space-between; padding: 22px 0 35px; color: #919b94; font: 10px var(--mono); }
+	@media (max-width: 700px) { .page-grid { padding: 0 20px; }.topbar { gap: 15px; }.topbar nav { display: none; }.edition { font-size: 9px; text-align: right; }.intro { display: block; padding: 75px 0 90px; }.intro-meta { margin-top: 58px; max-width: 200px; }.scroll-cue { margin-top: 35px; }.section-heading { display: block; margin: 0 0 28px; }.section-heading h2 { margin-top: 15px; }.walkthrough-section { padding-bottom: 85px; }.resources { display: block; padding: 65px 0 70px; }.resource-list { margin-top: 38px; }footer { gap: 20px; flex-wrap: wrap; } }
+</style>
