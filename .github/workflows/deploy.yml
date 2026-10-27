@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-26.04
     environment:
       name: github-pages
-      url: "https://alex-moons.github.io"
+      url: "https://alexmoons.dev"
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

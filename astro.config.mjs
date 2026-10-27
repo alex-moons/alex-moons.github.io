@@ -5,7 +5,7 @@ import svelte from '@astrojs/svelte';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://alex-moons.github.io',
+  site: 'https://alexmoons.dev',
   base: '/PersonalPortfolio',
   integrations: [svelte()]
-});
+}); 

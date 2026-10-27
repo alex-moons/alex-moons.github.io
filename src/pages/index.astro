@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Walkthrough from '../components/Walkthrough.svelte';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const resources = [
 	{ label: 'Astro docs', href: 'https://docs.astro.build', note: 'The island architecture' },
@@ -17,6 +18,7 @@ const resources = [
 				<a href="#walkthrough">Walkthrough</a>
 				<a href="/components">Components</a>
 				<a href="#resources">Resources</a>
+				<a href={`${base}/testing`}>Testing</a>
 			</nav>
 			<span class="edition">A small interactive guide · 2026</span>
 		</header>
@@ -37,6 +39,11 @@ const resources = [
 
 			<section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-title">
 				<div class="section-heading"><p class="kicker"><span></span> The interactive walkthrough</p><h2 id="walkthrough-title">Your next<br /><em>move</em></h2></div>
+				<Walkthrough client:load />
+			</section>
+
+			<section id="testing" class="testing-section" aria-labelledby="testing-title">
+				<div class="section-heading"><p class="kicker"><span></span> The testing section</p><h2 id="testing-title">Your next<br /><em>step</em></h2></div>
 				<Walkthrough client:load />
 			</section>
 
