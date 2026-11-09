@@ -1,0 +1,15 @@
+:root {
+ color-scheme: light dark;
+  --color-bg: light-dark(#ebf9e1, #232922);
+  --color-text: light-dark(#232922, #ebf9e1);
+  --color-surface: light-dark(#c7f5c6, #27401e);
+  --color-accent: #4bd928;
+  --color-on-accent: #ffffff;
+  --color-line: light-dark(#1e2a1c, #d8dfd5);
+  --space-md: 1rem;
+  --font-body: system-ui, sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
