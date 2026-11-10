@@ -12,6 +12,9 @@ import '../styles/global.css';
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content="An interactive field guide to Astro and Svelte." />
 		<title>Field Notes / Astro + Svelte</title>
+		<script is:inline>
+			try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -26,7 +29,3 @@ import '../styles/global.css';
 		height: 100%;
 	}
 </style>
-<script is:inline>
-	const saved = localStorage.getItem('theme');
-	if (saved) document.documentElement.dataset.theme = saved;
-</script>

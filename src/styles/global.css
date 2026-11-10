@@ -2,9 +2,10 @@
  color-scheme: light dark;
   --color-bg: light-dark(#ebf9e1, #232922);
   --color-text: light-dark(#232922, #ebf9e1);
-  --color-surface: light-dark(#c7f5c6, #27401e);
+  --color-surface: light-dark(#c7f5c6, #4a603f);
   --color-accent: #4bd928;
-  --color-on-accent: #ffffff;
+  --color-link: light-dark(#1f5fcc, #7db3ff);
+  --color-on-accent: #232922;
   --color-line: light-dark(#1e2a1c, #d8dfd5);
   --space-md: 1rem;
   --font-body: system-ui, sans-serif;
