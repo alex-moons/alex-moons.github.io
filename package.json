@@ -14,10 +14,15 @@
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
     "astro": "^7.3.3",
+    "astro-icon": "^1.2.0",
     "svelte": "^5.57.0",
     "typescript": "^6.0.3"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "sass": "^1.106.1"
   }
 }

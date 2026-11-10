@@ -1,79 +1,344 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Walkthrough from '../components/Walkthrough.svelte';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const resources = [
-	{ label: 'Astro docs', href: 'https://docs.astro.build', note: 'The island architecture' },
-	{ label: 'Svelte docs', href: 'https://svelte.dev/docs/svelte/overview', note: 'Reactive components' },
-	{ label: 'GitHub Pages', href: 'https://docs.astro.build/en/guides/deploy/github/', note: 'Static deployment' }
+const projects = [
+	{ title: 'ArtRef', text: 'A tool for building art reference artboards.', href: `${base}/artref`, tag: 'Web tool' },
+	{ title: 'iOS finance tool', text: 'An ios app to manage personal finances.', tag: 'iOS' },
+	{ title: 'Flowergame', text: 'An idle game made in Godot.', tag: 'Game' },
+	{ title: 'Little Duck', text: 'A compiler for a custom language, written during my degree.', tag: 'Compiler' }
 ];
+
+const timeline = [
+	{ when: 'Jan 2026 to now', title: 'Full-stack developer and tech lead', place: 'Siemens', text: 'Lead web development and manage the Sphere website.' },
+	{ when: 'Mar 2025 to Jan 2026', title: 'Frontend developer', place: 'Siemens', text: 'Full-time on Sphere, working in HTML, CSS and JavaScript.' },
+	{ when: 'May 2024 to Mar 2025', title: 'Graduate associate', place: 'Siemens', text: 'Started on the Sphere team right after graduating.' },
+	{ when: 'Sep to Dec 2023', title: 'Exchange semester', place: 'University of Toronto', text: 'Art and history courses.' },
+	{ when: 'Aug 2020 to Jun 2024', title: 'B.S. in Computer Technology Engineering', place: 'Tecnológico de Monterrey', text: 'Graduated with a CGPA of 94.46/100.' }
+];
+
+const now = ['ArtRef, the artboard creator', 'Flowergame', 'This website'];
+const latestThought = 'Twitter should come back stronger than ever without all the toxicity.';
 ---
 
 <Layout>
 	<div class="page-grid">
 		<header class="topbar">
-			<a class="brand" href="/" aria-label="Astro field notes home"><span class="brand-mark">✳</span><span>field notes<span class="brand-slash">/</span>astro</span></a>
+			<a class="topbar-icon" href={`${base}/`} aria-label="alexmoons home">
+				<img src={`${base}/favicon.svg`} alt="" width="24" height="24" />
+			</a>
 			<nav aria-label="Main navigation">
-				<a href="#walkthrough">Walkthrough</a>
-				<a href="/components">Components</a>
-				<a href="#resources">Resources</a>
-				<a href={`${base}/testing`}>Testing</a>
+				<button class="nav-toggle" type="button">
+					Menu <span class="caret" aria-hidden="true"></span>
+				</button>
+				<div class="nav-links">
+					<a href={`${base}/#projects`}>Projects</a>
+					<a href={`${base}/testing`}>Testing</a>
+					<a href={`${base}/artref`}>ArtRef</a>
+				</div>
 			</nav>
-			<span class="edition">A small interactive guide · 2026</span>
+			<span class="edition">A professional website to get to know me</span>
+			<button id="theme-toggle" type="button" aria-label="Toggle dark mode">◐</button>
 		</header>
 
-		<main>
-			<section class="intro" aria-labelledby="page-title">
-				<div class="intro-copy">
-					<p class="kicker"><span></span> A practical tour of the modern web stack</p>
-					<h1 id="page-title">Build less.<br /><em>Experience more.</em></h1>
-					<p class="lede">A hands-on field guide to Astro's content-first architecture and Svelte's playful reactivity. Read a concept, touch the code, see the island wake up.</p>
-				</div>
-				<div class="intro-meta">
-					<div class="meta-rule"></div>
-					<p>Four short chapters<br /><strong>One working page</strong></p>
-					<a class="scroll-cue" href="#walkthrough">Scroll to explore <span>↓</span></a>
-				</div>
-			</section>
+		<main class="main">
+			<div class="main-panel">
+				<section class="hero">
+					<div>
+						<h1>Alejandro Hernández</h1>
+						<p class="role">Full-stack developer and tech lead at Siemens, based in Monterrey, Mexico.</p>
+						<p>
+							I manage the Sphere website, working across the web and on iOS apps in Swift.
+							Outside work I build tools and games.
+						</p>
+						<p class="stack">
+							<strong>Works with</strong>
+							HTML, CSS, JavaScript, C#, Swift and SwiftUI, Supabase, Firebase, Azure, Astro, Svelte, Godot
+						</p>
+						<p class="actions">
+							<a class="button" href="#projects">See projects</a>
+							<a class="button ghost" href={`${base}/CV.pdf`} download>Download CV</a>
+						</p>
+					</div>
+					<img class="profile-pic" src={`${base}/src/assets/profile.jpeg`} alt="Alejandro Hernández" />
+				</section>	
 
-			<section id="walkthrough" class="walkthrough-section" aria-labelledby="walkthrough-title">
-				<div class="section-heading"><p class="kicker"><span></span> The interactive walkthrough</p><h2 id="walkthrough-title">Your next<br /><em>move</em></h2></div>
-				<Walkthrough client:load />
-			</section>
+				<section id="projects">
+					<h2>Projects</h2>
+					<div class="project-list">
+						{projects.map((p) => (
+							<article class="project">
+								<h3>{p.href ? <a href={p.href}>{p.title}</a> : p.title}</h3>
+								<p>{p.text}</p>
+								<span class="tag">{p.tag}</span>
+							</article>
+						))}
+					</div>
+				</section>
 
-			<section id="testing" class="testing-section" aria-labelledby="testing-title">
-				<div class="section-heading"><p class="kicker"><span></span> The testing section</p><h2 id="testing-title">Your next<br /><em>step</em></h2></div>
-				<Walkthrough client:load />
-			</section>
+				<section id="timeline">
+					<h2>Work and study</h2>
+					<ol class="timeline">
+						{timeline.map((t) => (
+							<li>
+								<p class="when">{t.when}</p>
+								<p class="what"><strong>{t.title}</strong>, {t.place}</p>
+								<p>{t.text}</p>
+							</li>
+						))}
+					</ol>
+				</section>
+			</div>
 
-			<section id="resources" class="resources" aria-labelledby="resources-title">
-				<div><p class="kicker"><span></span> Keep going</p><h2 id="resources-title">The good<br /><em>stuff</em></h2></div>
-				<div class="resource-list">
-					{resources.map((resource, index) => (
-						<a class="resource" href={resource.href} target="_blank" rel="noreferrer">
-							<span class="resource-number">0{index + 1}</span><span><strong>{resource.label}</strong><small>{resource.note}</small></span><span class="arrow">↗</span>
-						</a>
-					))}
-				</div>
-			</section>
+			<aside class="side-panel" aria-label="Currently">
+				<section>
+					<h2 class="side-title">Now working on</h2>
+					<ul>
+						{now.map((item) => <li>{item}</li>)}
+					</ul>
+				</section>
+				<section>
+					<h2 class="side-title">Latest thought</h2>
+					<p>{latestThought}</p>
+				</section>
+				<section>
+					<h2 class="side-title">Local time</h2>
+					<p>Monterrey: <span id="local-time">--:--</span></p>
+				</section>
+			</aside>
 		</main>
 
-		<footer><span>Made with Astro + Svelte</span><span>Source is the tutorial</span></footer>
+		<footer><span>Made with Astro and Svelte</span><span>Thanks for checking it out!</span></footer>
 	</div>
 </Layout>
 
 <style>
-	:global(:root) { --ink: #20302c; --paper: #f5f6ef; --lime: #b8d654; --coral: #d77960; --line: #d8dfd5; --display: Georgia, 'Times New Roman', serif; --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
-	:global(body) { background: var(--paper); color: var(--ink); font-family: 'Trebuchet MS', Verdana, sans-serif; }
-	.page-grid { max-width: 1220px; margin: auto; padding: 0 42px; }
-	.topbar { display: flex; align-items: center; min-height: 76px; border-bottom: 1px solid var(--line); gap: 40px; font: 11px var(--mono); }
-	.brand { display: flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font-weight: 700; letter-spacing: -.06em; }.brand-mark { display: grid; place-items: center; width: 23px; height: 23px; color: var(--ink); background: var(--lime); font-size: 17px; }.brand-slash { color: var(--coral); }
-	nav { display: flex; gap: 25px; margin-left: 12px; } nav a { color: #728078; text-decoration: none; } nav a:hover { color: var(--ink); }.edition { margin-left: auto; color: #a0aaa3; font-size: 10px; }
-	.intro { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 30px; padding: 112px 8% 128px; }.kicker { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--coral); font: 700 10px var(--mono); letter-spacing: .13em; text-transform: uppercase; }.kicker span { display: inline-block; width: 22px; height: 1px; background: currentColor; }
-	h1, h2 { margin: 18px 0 0; color: var(--ink); font: 400 clamp(58px, 9vw, 118px)/.91 var(--display); letter-spacing: -.055em; } h1 em, h2 em { color: var(--coral); font-style: italic; }.lede { max-width: 465px; margin: 30px 0 0 4px; color: #68766f; font-size: 16px; line-height: 1.7; }.intro-meta { align-self: end; padding-bottom: 8px; color: #78847d; font: 11px/1.7 var(--mono); }.meta-rule { width: 100%; height: 1px; margin-bottom: 18px; background: var(--ink); }.intro-meta strong { color: var(--ink); font-weight: 500; }.scroll-cue { display: block; margin-top: 76px; color: var(--ink); text-decoration: none; }.scroll-cue span { margin-left: 13px; color: var(--coral); font-size: 18px; }
-	.walkthrough-section { padding: 0 0 125px; }.section-heading { display: flex; align-items: end; justify-content: space-between; margin: 0 8% 38px; }.section-heading h2, .resources h2 { font-size: clamp(43px, 6vw, 72px); }.section-heading .kicker { margin-bottom: 7px; }
-	.resources { display: grid; grid-template-columns: .65fr 1fr; gap: 10%; padding: 85px 8% 95px; border-top: 1px solid var(--line); }.resource-list { border-top: 1px solid var(--line); }.resource { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 14px; min-height: 72px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }.resource-number { color: var(--coral); font: 10px var(--mono); }.resource strong, .resource small { display: block; }.resource strong { font-size: 14px; }.resource small { margin-top: 4px; color: #87928b; font: 10px var(--mono); }.arrow { color: var(--coral); font-size: 19px; }.resource:hover strong { text-decoration: underline; text-underline-offset: 4px; }
-	footer { display: flex; justify-content: space-between; padding: 22px 0 35px; color: #919b94; font: 10px var(--mono); }
-	@media (max-width: 700px) { .page-grid { padding: 0 20px; }.topbar { gap: 15px; }.topbar nav { display: none; }.edition { font-size: 9px; text-align: right; }.intro { display: block; padding: 75px 0 90px; }.intro-meta { margin-top: 58px; max-width: 200px; }.scroll-cue { margin-top: 35px; }.section-heading { display: block; margin: 0 0 28px; }.section-heading h2 { margin-top: 15px; }.walkthrough-section { padding-bottom: 85px; }.resources { display: block; padding: 65px 0 70px; }.resource-list { margin-top: 38px; }footer { gap: 20px; flex-wrap: wrap; } }
+	.page-grid {
+		--font-display: Georgia, 'Times New Roman', serif;
+		max-width: 1220px;
+		margin: auto;
+		padding: 0 42px;
+	}
+
+	a:focus-visible,
+	button:focus-visible {
+		outline: 2px solid var(--color-link);
+		outline-offset: 3px;
+	}
+
+	/* Header */
+	.topbar {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		min-height: 76px;
+		border-bottom: 1px solid var(--color-line);
+		font: 11px var(--font-mono);
+	}
+	.topbar-icon img { display: block; }
+	.edition { margin-left: auto; opacity: 0.6; font-size: 10px; }
+
+	#theme-toggle {
+		width: 2rem;
+		height: 2rem;
+		border: 1px solid var(--color-line);
+		border-radius: 50%;
+		background: none;
+		color: inherit;
+		cursor: pointer;
+	}
+
+	/* Nav: horizontal row, dropdown below 560px */
+	nav { position: relative; margin-left: 12px; }
+	.nav-toggle { display: none; }
+	.nav-links { display: flex; gap: 25px; }
+	nav a { color: var(--color-text); text-decoration: none; opacity: 0.75; }
+	nav a:hover,
+	nav a:focus-visible { color: var(--color-link); opacity: 1; }
+
+	@media (max-width: 560px) {
+		.nav-toggle {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 0;
+			border: 0;
+			background: none;
+			font: inherit;
+			color: var(--color-text);
+			cursor: pointer;
+		}
+		.caret {
+			width: 0;
+			height: 0;
+			border-left: 4px solid transparent;
+			border-right: 4px solid transparent;
+			border-top: 6px solid currentColor;
+			transition: transform 0.2s ease;
+		}
+		nav:focus-within .caret { transform: rotate(180deg); }
+
+		.nav-links {
+			position: absolute;
+			top: calc(100% + 8px);
+			left: 0;
+			z-index: 10;
+			flex-direction: column;
+			gap: 0;
+			min-width: 160px;
+			padding: 4px;
+			background: var(--color-bg);
+			border: 1px solid var(--color-line);
+			border-radius: 8px;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-6px);
+			transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+		}
+		.nav-links a { padding: 10px 12px; border-radius: 6px; }
+		.nav-links a:hover { background: var(--color-surface); }
+
+		nav:focus-within .nav-links {
+			opacity: 1;
+			visibility: visible;
+			transform: none;
+			transition-delay: 0s;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.caret, .nav-links { transition: none; }
+	}
+
+	/* Layout: single column, main + side rail from 900px */
+	.main { display: grid; gap: 3rem; padding: 3rem 0 4rem; }
+	.main-panel { display: grid; gap: 4rem; min-width: 0; }
+
+	@media (min-width: 900px) {
+		.main { grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); gap: 4rem; }
+		.side-panel { position: sticky; top: 1.5rem; align-self: start; }
+	}
+
+	/* Type */
+	h1, h2 {
+		margin: 0 0 1rem;
+		font-family: var(--font-display);
+		font-weight: 400;
+		letter-spacing: -0.03em;
+		line-height: 1;
+	}
+	h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); }
+	h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+	p { max-width: 62ch; line-height: 1.65; margin: 0 0 1rem; }
+
+	/* Hero */
+	.hero { display: flex; gap: 2rem; align-items: center; }
+	.profile-pic {
+		display: block;
+		width: 180px;
+		aspect-ratio: 1;
+		height: 180px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.role { font-size: 1.2rem; }
+	.stack { font-size: 0.9rem; }
+	.stack strong { display: block; font-weight: 600; }
+	.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1.5rem; }
+	.button {
+		padding: 0.65rem 1.1rem;
+		border: 1px solid var(--color-accent);
+		border-radius: 6px;
+		background: var(--color-accent);
+		color: var(--color-on-accent);
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.button.ghost { background: none; color: var(--color-text); border-color: var(--color-line); }
+	.button:hover { filter: brightness(0.95); }
+
+	/* Projects */
+	.project-list { display: grid; gap: 1.75rem 2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+	.project { padding-top: 0.75rem; border-top: 2px solid var(--color-line); }
+	.project h3 { margin: 0 0 0.35rem; font-size: 1.15rem; }
+	.project h3 a { color: var(--color-link); }
+	.project p { margin-bottom: 0.5rem; }
+	.tag { font: 11px var(--font-mono); opacity: 0.7; }
+
+	/* Timeline */
+	.timeline {
+		display: grid;
+		gap: 1.75rem;
+		margin: 0;
+		padding: 0 0 0 1.5rem;
+		list-style: none;
+		border-left: 1px solid var(--color-line);
+	}
+	.timeline li { position: relative; }
+	.timeline li::before {
+		content: '';
+		position: absolute;
+		left: calc(-1.5rem - 4.5px);
+		top: 0.4rem;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--color-accent);
+	}
+	.timeline p { margin: 0 0 0.25rem; }
+	.when { font: 11px var(--font-mono); opacity: 0.7; }
+
+	/* Side panel */
+	.side-panel {
+		display: grid;
+		gap: 1.75rem;
+		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-line);
+		border-radius: 8px;
+	}
+	.side-title { margin-bottom: 0.5rem; font-size: 1.25rem; }
+	.side-panel ul { margin: 0; padding-left: 1.1rem; line-height: 1.7; }
+	.side-panel p { margin: 0; }
+
+	footer {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 20px;
+		padding: 22px 0 35px;
+		border-top: 1px solid var(--color-line);
+		font: 10px var(--font-mono);
+		opacity: 0.7;
+	}
+
+	@media (max-width: 700px) {
+		.page-grid { padding: 0 20px; }
+		.edition { display: none; }
+		#theme-toggle { margin-left: auto; }
+	}
 </style>
+
+<script>
+	const root = document.documentElement;
+	document.getElementById('theme-toggle')?.addEventListener('click', () => {
+		const current =
+			root.dataset.theme ??
+			(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		const next = current === 'dark' ? 'light' : 'dark';
+		root.dataset.theme = next;
+		try { localStorage.setItem('theme', next); } catch {}
+	});
+
+	const clock = document.getElementById('local-time');
+	if (clock) {
+		const fmt = new Intl.DateTimeFormat('en', {
+			hour: 'numeric',
+			minute: '2-digit',
+			timeZone: 'America/Monterrey'
+		});
+		const tick = () => { clock.textContent = fmt.format(new Date()); };
+		tick();
+		setInterval(tick, 30000);
+	}
+</script>

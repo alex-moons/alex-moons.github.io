@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/ArtRef.astro';
+import '../styles/artref.scss';
+import { Icon } from "astro-icon/components";
+---
+
+<Layout>
+	<div class="testing-page">
+		<header class="topbar">
+			<a class="brand" href="/" aria-label="Home"><span class="brand-mark">></span><span>Home</span></a>
+			<nav aria-label="Main navigation"><a href="/">Home</a><a class="current" href="/ArtRef">ArtRef</a></nav>
+			<span class="edition">Useful Tools · 01</span>
+		</header>
+
+		<main>
+			<section class="toolbox-section" aria-labelledby="toolbox-title">
+				<div class="section-heading">
+					<h2 id="toolbox-title">ArtRef</h2>
+				</div>
+				<p class="section-heading">Start drag-n-dropping, pasting or uploading images. ArtRef supports all major image formats and even works with image urls.</p>
+				<!-- <button class="btn-annoying">Test</button>
+				<a class="link-annoying" href="https://alexmoons.dev/testing" target="_blank" rel="noopener noreferrer">Link</a> -->
+
+				<div class="artref-container">
+					<button class="clipboard-paste" id="clipboard-paste">Paste <Icon name="paste"/></button>
+					<div class="artref-board" id="artref-board">
+						<!-- Images will be added here -->
+					</div>
+					<div class="artref-controls">
+						<input type="file" id="artref-file-input" accept="image/*" multiple />
+						<button id="artref-clear-button">Clear Board</button>
+					</div>
+				</div>
+
+			</section>
+		</main>
+
+		<footer><span>Made by Alex Moons</span><a href="/">Back Home ↗</a></footer>
+	</div>
+</Layout>
+
+<script>
+	function clipboardImage(event:any){
+		const items = event.clipboardData.items;
+		for (const item of items) {
+
+			if (item.type.indexOf('image') !== -1) {
+			const file = item.getAsFile();
+			if (!file) return;
+			
+			// 1. Create a local preview URL
+			const imageURL = URL.createObjectURL(file);
+			
+			// 2. Display it in an <img> tag
+			const img = document.createElement('img');
+			img.src = imageURL;
+			img.draggable=true;
+			const board = document.getElementById('artref-board');
+			if(board) {
+				board.appendChild(img);
+			}
+
+			// 3. Optional: Prevent default behavior if needed
+			event.preventDefault();
+			}	
+		}
+	}
+	const clipboardPasteButton = document.getElementById('clipboard-paste');
+	clipboardPasteButton?.addEventListener('click', async () => {
+		try {
+			const item = await navigator.clipboard.read();
+			item.then((data) => {
+				clipboardImage({clipboardData: {items: data}});
+			});
+		} catch (err) {
+			console.error('Failed to read clipboard contents: ', err);
+		}
+	});
+	document.addEventListener('paste', async (event) => {
+	if(event.clipboardData && event.clipboardData.items) {
+		clipboardImage(event);
+	}
+	});
+</script>
+
+<style>
+	:global(:root) { --ink: #20302c; --paper: #f5f6ef; --lime: #b8d654; --coral: #d77960; --line: #d8dfd5; --display: Georgia, 'Times New Roman', serif; --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
+	:global(body) { background: var(--paper); color: var(--ink); font-family: 'Trebuchet MS', Verdana, sans-serif; }.components-page { max-width: 1220px; margin: auto; padding: 0 42px; }.topbar { display: flex; align-items: center; min-height: 76px; border-bottom: 1px solid var(--line); gap: 40px; font: 11px var(--mono); }.brand { display: flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font-weight: 700; letter-spacing: -.06em; }.brand-mark { display: grid; place-items: center; width: 23px; height: 23px; color: var(--ink); background: var(--lime); font-size: 17px; }.brand-slash { color: var(--coral); }nav { display: flex; gap: 25px; margin-left: 12px; }nav a { color: #728078; text-decoration: none; }nav a:hover, nav a.current { color: var(--ink); }.edition { margin-left: auto; color: #a0aaa3; font-size: 10px; }.page-intro { max-width: 780px; padding: 102px 8% 95px; }.kicker { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--coral); font: 700 10px var(--mono); letter-spacing: .13em; text-transform: uppercase; }.kicker span { display: inline-block; width: 22px; height: 1px; background: currentColor; }h1, h2 { margin: 18px 0 0; color: var(--ink); font: 400 clamp(58px, 9vw, 116px)/.9 var(--display); letter-spacing: -.055em; }h1 em, h2 em { color: var(--coral); font-style: italic; }.lede { max-width: 500px; margin: 29px 0 0 4px; color: #68766f; font-size: 16px; line-height: 1.7; }.lab-section { padding-bottom: 125px; }.section-heading { display: flex; align-items: end; justify-content: space-between; margin: 0 8% 38px; }.section-heading h2, .notes h2 { font-size: clamp(43px, 6vw, 72px); }.section-heading .kicker { margin-bottom: 7px; }.section-note { margin: 0 0 6px; color: #89958d; font: 11px/1.7 var(--mono); text-align: right; }.notes { display: grid; grid-template-columns: .65fr 1fr; gap: 10%; padding: 85px 8% 95px; border-top: 1px solid var(--line); }.note-list { border-top: 1px solid var(--line); }.note { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }.note > span { color: var(--coral); font: 10px var(--mono); }.note strong { font-size: 14px; }.note p { margin: 6px 0 0; color: #7a877f; font-size: 12px; line-height: 1.6; }footer { display: flex; justify-content: space-between; padding: 22px 0 35px; color: #919b94; font: 10px var(--mono); }footer a { color: var(--ink); text-decoration: none; }footer a:hover { color: var(--coral); }
+	@media (max-width: 700px) { .components-page { padding: 0 20px; }.topbar { gap: 15px; }.topbar nav { display: none; }.edition { font-size: 9px; text-align: right; }.page-intro { padding: 75px 0 75px; }.section-heading { display: block; margin: 0 0 28px; }.section-heading h2 { margin-top: 15px; }.section-note { margin-top: 22px; text-align: left; }.lab-section { padding-bottom: 85px; }.notes { display: block; padding: 65px 0 70px; }.note-list { margin-top: 38px; }footer { gap: 20px; flex-wrap: wrap; } }
+</style>
