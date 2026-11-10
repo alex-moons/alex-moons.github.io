@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import profile from '../assets/profile.jpeg';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const projects = [
@@ -60,7 +61,7 @@ const latestThought = 'Twitter should come back stronger than ever without all t
 							<a class="button ghost" href={`${base}/CV.pdf`} download>Download CV</a>
 						</p>
 					</div>
-					<img class="profile-pic" src={`${base}/src/assets/profile.jpeg`} alt="Alejandro Hernández" />
+					<img class="profile-pic" src={profile.src} alt="Alejandro Hernández" />
 				</section>	
 
 				<section id="projects">
