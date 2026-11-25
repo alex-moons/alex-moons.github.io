@@ -19,21 +19,101 @@
 .artref-board{
     display: grid;
     min-height: 200px;
-    height: 100%;
     width: 100%;
-    align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
+    box-sizing: border-box;
+    align-items: start;
+    grid-template-columns: repeat(var(--board-columns, 1), minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
     background-color: gray;
-    align-content: center;
+    align-content: start;
     overflow: hidden;
     justify-content: center;
+    justify-items: center;
 
-    & > img{
-        aspect-ratio: width / height;    
-        max-width: 100%;
-        max-height: 100%;
+    & > .artref-tile{
+        position: relative;
+        width: 100%;
+        max-width: 240px;
+        aspect-ratio: 1;
+        user-select: none;
+
+        &.is-reordering{
+            opacity: .8;
+            z-index: 1;
+        }
+
+        & > img{
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            -webkit-user-drag: none;
+        }
     }
+
+    .artref-drag-handle{
+        position: absolute;
+        right: 6px;
+        bottom: 6px;
+        width: 32px;
+        height: 32px;
+        cursor: grab;
+        touch-action: none;
+    }
+
+    .artref-drag-handle:active{
+        cursor: grabbing;
+    }
+
+    &.is-reordering{
+        user-select: none;
+    }
+
+    &.is-dragging { outline: 2px dashed var(--lime); outline-offset: -6px; }
+}
+.artref-controls{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+
+    label{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+#artref-background-color{
+    width: 40px;
+    height: 32px;
+    padding: 2px;
+}
+#artref-export-dialog{
+    width: min(420px, calc(100vw - 48px));
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    background: var(--paper);
+
+    &::backdrop{ background: rgb(0 0 0 / 45%); }
+
+    h3{ margin-top: 0; }
+
+    > label,
+    > select{
+        display: block;
+        margin: 12px 0 6px;
+    }
+
+    > select{ width: 100%; padding: 8px; }
+}
+.artref-export-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 .btn-annoying{
     position: relative;
